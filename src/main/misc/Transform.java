@@ -57,8 +57,12 @@ public class Transform {
      */
     public Transform getParentedTransform() {
         Transform parentedTransform = hasParent() ? parent.getParentedTransform() : new Transform();
-        parentedTransform.position.add(position);
-        parentedTransform.rotation += rotation;
+        parentedTransform.add(this);
         return parentedTransform;
+    }
+
+    public void add(Transform other) {
+        position.add(other.position);
+        rotation += other.rotation;
     }
 }

@@ -9,21 +9,21 @@ public interface Scene {
      * Called on game startup to load needed resources. Should help to reduce the chance of weird null pointers when
      * things inevitably start getting hacked together.
      */
-    public void Load();
+    public void load();
 
     /**
      * Called when the scene is activated.
      */
-    public void Activate();
+    public void activate();
 
     /**
      * Called every frame after the scene is activated. Should update and draw all entities in the scene, and do other
      * stuff as needed.
      */
-    public void Update();
+    public void update();
 
     /**
      * Called when the scene is deactivated.
      */
-    public void Deactivate();
+    public void deactivate();
 }
