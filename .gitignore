@@ -1,3 +1,3 @@
 .idea
 ProcessingGameFramework.iml
-src/main/scenes/PlatformerScene.java
+src/lib/scenes/PlatformerScene.java

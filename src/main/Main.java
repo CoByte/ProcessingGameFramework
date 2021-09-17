@@ -1,8 +1,16 @@
 package main;
 
+import lib.input.InputManager;
+import lib.scenes.SceneStack;
+import lib.sprites.Sprites;
+import main.demoproject.PlatformerScene;
 import processing.core.PApplet;
 import processing.core.PVector;
-import processing.event.KeyEvent;
+
+import java.awt.*;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class Main extends PApplet {
 
@@ -17,8 +25,15 @@ public class Main extends PApplet {
     public static final String TITLE = "template";
     public static final int FRAMERATE = 60;
     public static final int DEFAULT_MODE = CENTER;
+    public static final Color BACKGROUND_COLOR = new Color(0, 15, 45);
 
-    public Main() {
+    private final SceneStack sceneStack = SceneStack.getInstance();
+    private final InputManager inputManager = InputManager.getInstance();
+
+    // Various stuff
+    private final PlatformerScene platformerScene = new PlatformerScene();
+
+    public Main() throws URISyntaxException {
         // Don't put anything above this line, it should be the very first thing to execute to avoid null pointers
         p = this;
     }
@@ -33,14 +48,30 @@ public class Main extends PApplet {
         frameRate(FRAMERATE);
         surface.setTitle(TITLE);
         imageMode(DEFAULT_MODE);
+
+        // Loads all sprites
+        for (Sprites sprite : Sprites.values()) {
+            sprite.load();
+        }
+
+        platformerScene.load();
+        sceneStack.push(platformerScene);
     }
 
     @Override
     public void draw() {
+        background(BACKGROUND_COLOR.getRGB());
+        sceneStack.run();
     }
 
     @Override
     public void keyPressed() {
+        inputManager.testPresses((short) keyCode);
+    }
+
+    @Override
+    public void keyReleased() {
+        inputManager.testReleases((short) keyCode);
     }
 
     public static void main(String... args) {
